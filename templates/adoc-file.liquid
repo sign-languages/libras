@@ -1,0 +1,58 @@
+== {{key}}
+:linkcss:
+:source-highlighter: coderay
+:sign-lang: libras
+
+
+Referência:  link:.[{{key}}]
+
+Título:  {{title}} +
+Descrição:  {{description}} +
+Tags: {% for tag in tags %} link:../../tags/{{tag}}[{{tag}}]{% unless forloop.last %}, {% endunless %} {% endfor %}
+
+
+Como usar:: <<attributes>>, <<block_macro>>, <<inline_macro>>
+
+
+[[attributes]]
+=== Atributos
+
+Você deve incluir no início do documento asciidoc:
+
+----
+:sign-lang: libras
+:sign-repositories: https://github.com/edusantana/sign-languages
+----
+
+
+[[block_macro]]
+=== Block
+
+.{{description}}
+sign::[{{key}}]
+
+
+----
+.{{description}}
+sign::[{{key}}]
+----
+
+[[inline_macro]]
+=== Inline
+
+sign:[{{key}}]
+
+----
+sign:[{{key}}]
+----
+
+sign:Consulte o sinal Casa em LIBRAS[{{key}}]
+
+----
+sign:Consulte o sinal Casa em LIBRAS[{{key}}]
+----
+
+=== Sources
+
+- This asciidoc file
+- YAML
