@@ -1,0 +1,58 @@
+== c/casa
+:linkcss:
+:source-highlighter: coderay
+:sign-lang: libras
+
+
+Referência:  link:.[c/casa]
+
+Título:  Casa +
+Descrição:  Casa ou lar. +
+Tags:  link:../../tags/casa[casa],   link:../../tags/construção[construção],   link:../../tags/lar[lar] 
+
+
+Como usar:: <<attributes>>, <<block_macro>>, <<inline_macro>>
+
+
+[[attributes]]
+=== Atributos
+
+Você deve incluir no início do documento asciidoc:
+
+----
+:sign-lang: libras
+:sign-repositories: https://github.com/edusantana/sign-languages
+----
+
+
+[[block_macro]]
+=== Block
+
+.Casa ou lar.
+sign::[c/casa]
+
+
+----
+.Casa ou lar.
+sign::[c/casa]
+----
+
+[[inline_macro]]
+=== Inline
+
+sign:[c/casa]
+
+----
+sign:[c/casa]
+----
+
+sign:Consulte o sinal Casa em LIBRAS[c/casa]
+
+----
+sign:Consulte o sinal Casa em LIBRAS[c/casa]
+----
+
+=== Sources
+
+- This asciidoc file
+- YAML
