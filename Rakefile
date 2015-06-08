@@ -2,7 +2,9 @@ require 'rake/clean'
 require 'yaml'
 require 'tilt'
 require 'liquid'
+require 'json'
 
+LANGUAGE_CONF = YAML.load_file('config/language.yaml')
 SLANG = YAML.load_file('config/language.yaml')['lang_dir']
 TARGET = 'target'
 
@@ -26,6 +28,15 @@ def template_file (title)
   YAML.load_file('config/templates.yaml')[title]
 end
 
+json_language_file = "#{TARGET}/language.json"
+file json_language_file
+json_language = {
+  title: LANGUAGE_CONF['title'],
+  url:LANGUAGE_CONF['url'],
+  version:LANGUAGE_CONF['version'],
+  date: Time.now.utc,
+  keys:{}
+  }
 
 Rake::FileList["#{SLANG}/**/*.yaml"].each do |file|
   key = file.ext("")[(SLANG.size+1)..-1]  # libras/c/casa.yaml -> c/casa
@@ -35,6 +46,7 @@ Rake::FileList["#{SLANG}/**/*.yaml"].each do |file|
 
   adoc_file = "#{adoc_parent_dir}/#{File.basename(file)}".ext(".adoc") # target/c/casa/casa.adoc
   conf = YAML.load_file(file)
+  json_language[:keys][key]=conf
   file adoc_file => [file, adoc_parent_dir,template_file('adoc')] do |t|
     template = Tilt.new(template_file('adoc'))
     rendered = template.render(conf, key:key)
@@ -60,7 +72,10 @@ Rake::FileList["#{SLANG}/**/*.yaml"].each do |file|
      tag_adoc = "#{tag_dir}/index.adoc"
      file tag_adoc => [tag_dir, html_file]
      task :tags => tag_adoc
+     file json_language_file => [tag_adoc]
    end
+
+   file json_language_file => [html_file]
 end
 
 tags.each do |tag, keys|
@@ -77,6 +92,14 @@ tags.each do |tag, keys|
   end
   task :tags => tag_html
 end
+
+
+file json_language_file do |t|
+  File.open(t.name, 'w') { |f| f.write(JSON.generate(json_language)) }
+end
+
+desc 'Generate the json file of language'
+task :json => json_language_file
 
 
 task :compile
