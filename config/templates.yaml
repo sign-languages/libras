@@ -1,2 +1,3 @@
 adoc: templates/adoc-file.liquid
 tag: templates/tag.liquid
+tags: templates/tags.liquid

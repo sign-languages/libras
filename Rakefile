@@ -93,6 +93,23 @@ tags.each do |tag, keys|
   task :tags => tag_html
 end
 
+file template_file('tags')
+
+tags_adoc =  "#{tags_dir}/index.adoc"
+file tags_adoc => [tags_dir, template_file('tags')] do |t|
+  template = Tilt.new(template_file('tags'))
+  rendered = template.render(tags: tags)
+  File.open(t.name, 'w') { |f| f.write(rendered) }
+end
+
+tags_html = "#{tags_dir}/index.html"
+file tags_html => [tags_adoc] do |t|
+  system "asciidoctor -a linkcss #{tags_adoc} -o #{tags_html}"
+end
+
+task :adoc => tags_adoc
+task :tags => tags_html
+
 
 file json_language_file do |t|
   File.open(t.name, 'w') { |f| f.write(JSON.generate(json_language)) }
