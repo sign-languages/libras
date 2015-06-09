@@ -106,6 +106,7 @@ tags_html = "#{tags_dir}/index.html"
 file tags_html => [tags_adoc] do |t|
   system "asciidoctor -a linkcss #{tags_adoc} -o #{tags_html}"
 end
+task :html => tags_html
 
 task :adoc => tags_adoc
 task :tags => tags_html
