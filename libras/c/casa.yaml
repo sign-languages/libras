@@ -4,10 +4,7 @@ tags:
   - casa
   - construção
   - lar
-video:
-  - https://www.youtube.com/watch?v=xjxjTMBoNjE
+video: https://www.youtube.com/watch?v=xjxjTMBoNjE
 images:
-  still:
-    - http://img.youtube.com/vi/xjxjTMBoNjE/0.jpg
-  animated:
-    - http://cdn.makeagif.com/media/6-08-2015/wdiTfM.gif
+  still: http://img.youtube.com/vi/xjxjTMBoNjE/0.jpg
+  animated: http://cdn.makeagif.com/media/6-08-2015/wdiTfM.gif

@@ -79,7 +79,6 @@ Rake::FileList["#{SLANG}/**/*.yaml"].each do |file|
 
    json_key = adoc_parent_dir + ".json" #  target/c/casa.json
    file json_key => [file,adoc_parent_dir] do |t|
-     puts conf
      File.open(t.name, 'w') { |f| f.write(JSON.generate(conf)) }
    end
    task :json => json_key
