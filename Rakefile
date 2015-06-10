@@ -46,6 +46,7 @@ Rake::FileList["#{SLANG}/**/*.yaml"].each do |file|
 
   adoc_file = "#{adoc_parent_dir}/#{File.basename(file)}".ext(".adoc") # target/c/casa/casa.adoc
   conf = YAML.load_file(file)
+  conf[:key] = key             # the key will be the file name with its path
   json_language[:keys][key]=conf
   file adoc_file => [file, adoc_parent_dir,template_file('adoc')] do |t|
     template = Tilt.new(template_file('adoc'))
@@ -72,10 +73,16 @@ Rake::FileList["#{SLANG}/**/*.yaml"].each do |file|
      tag_adoc = "#{tag_dir}/index.adoc"
      file tag_adoc => [tag_dir, html_file]
      task :tags => tag_adoc
-     file json_language_file => [tag_adoc]
    end
 
-   file json_language_file => [html_file]
+   file json_language_file => [file]
+
+   json_key = adoc_parent_dir + ".json" #  target/c/casa.json
+   file json_key => [file,adoc_parent_dir] do |t|
+     puts conf
+     File.open(t.name, 'w') { |f| f.write(JSON.generate(conf)) }
+   end
+   task :json => json_key
 end
 
 tags.each do |tag, keys|
